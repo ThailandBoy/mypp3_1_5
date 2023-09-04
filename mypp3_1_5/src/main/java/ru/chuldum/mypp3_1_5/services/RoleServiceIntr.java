@@ -5,7 +5,7 @@ import ru.chuldum.mypp3_1_5.entities.Role;
 import java.util.List;
 
 public interface RoleServiceIntr {
-    public List<Role> getAllRoles();
+    List<Role> getAllRoles();
 
-    public Role getById(Long id);
+    Role getById(Long id);
 }

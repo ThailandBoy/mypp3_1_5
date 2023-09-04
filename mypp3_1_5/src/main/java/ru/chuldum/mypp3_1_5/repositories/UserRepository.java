@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Query("SELECT DISTINCT u FROM User u INNER JOIN FETCH u.roles ORDER BY u.id")
-    public List<User> getAll();
+    List<User> getAll();
 
 
 }
