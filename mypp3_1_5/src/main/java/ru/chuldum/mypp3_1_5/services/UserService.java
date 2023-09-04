@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService, UserServiceIntr {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceIntr roleServiceIntr;
 
     @Autowired
     private UserRepository userRepository;
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService, UserServiceIntr {
         user.setPassword(passwordEncoder.encode(userRoleWrap.getUser().getPassword()));
         List<Role> roleList = new ArrayList<>();
         for (Long roleId : userRoleWrap.getRoleList2()) {
-            roleList.add(roleService.getById(roleId));
+            roleList.add(roleServiceIntr.getById(roleId));
         }
         user.setRoles(roleList);
         save(user);
@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService, UserServiceIntr {
     }
 
     @Override
+    @Transactional
     public void save(User user) {
         userRepository.save(user);
     }

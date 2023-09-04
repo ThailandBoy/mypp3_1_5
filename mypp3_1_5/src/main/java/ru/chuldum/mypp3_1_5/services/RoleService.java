@@ -13,10 +13,12 @@ public class RoleService implements RoleServiceIntr {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Override
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
+    @Override
     public Role getById(Long id) {
         return roleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Role with id=" + id + " not found."));
