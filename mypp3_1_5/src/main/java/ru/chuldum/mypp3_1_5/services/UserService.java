@@ -52,6 +52,7 @@ public class UserService implements UserDetailsService, UserServiceIntr {
     }
 
     @Override
+    @Transactional
     public void deleteViaId(Long id) {
         userRepository.deleteById(id);
     }
