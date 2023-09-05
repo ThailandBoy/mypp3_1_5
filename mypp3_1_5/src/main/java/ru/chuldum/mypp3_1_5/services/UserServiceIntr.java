@@ -1,6 +1,7 @@
 package ru.chuldum.mypp3_1_5.services;
 
 import ru.chuldum.mypp3_1_5.entities.User;
+import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface UserServiceIntr {
     void deleteViaId(Long id);
 
     User findByUsername(String username);
+
+    void saveWrapper(UserRoleWrap userRoleWrap);
 
 }

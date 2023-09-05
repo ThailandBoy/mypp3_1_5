@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
-import ru.chuldum.mypp3_1_5.services.RoleService;
-import ru.chuldum.mypp3_1_5.services.UserService;
+import ru.chuldum.mypp3_1_5.services.RoleServiceIntr;
+import ru.chuldum.mypp3_1_5.services.UserServiceIntr;
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private RoleService roleService;
+    private RoleServiceIntr roleService;
     @Autowired
-    private UserService userService;
+    private UserServiceIntr userService;
 
     @GetMapping("/")
     public String user(Model model) {

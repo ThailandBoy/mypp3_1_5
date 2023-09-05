@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
-import ru.chuldum.mypp3_1_5.services.RoleService;
-import ru.chuldum.mypp3_1_5.services.UserService;
+import ru.chuldum.mypp3_1_5.services.RoleServiceIntr;
+import ru.chuldum.mypp3_1_5.services.UserServiceIntr;
 
 
 
@@ -24,10 +24,10 @@ import ru.chuldum.mypp3_1_5.services.UserService;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceIntr userService;
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceIntr roleService;
 
     @GetMapping("/")
     public String admin(ModelMap model) {

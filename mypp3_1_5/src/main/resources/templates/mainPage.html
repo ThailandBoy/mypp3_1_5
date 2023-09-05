@@ -79,15 +79,15 @@
                         <!-- Nav pills -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#users_table">Users table</a>
+                                <a class="nav-link active" id="navTabsUsersTable" data-toggle="tab" href="#users_table">Users table</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#new_user">New User</a>
+                                <a class="nav-link" id="navTabsNewUser" data-toggle="tab" href="#new_user">New User</a>
                             </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content border">
-                            <div id="users_table" class="container tab-pane active col-md-12 px-md-0 pt-md-0">
+                            <div id="users_table" class="container tab-pane col-md-12 px-md-0 pt-md-0 fade active show">
                                 <div class="container col-md-12 px-md-4 py-md-2 border">
                                     <h5>All users</h5>
                                 </div>
@@ -109,7 +109,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div id="new_user" class="container tab-pane fade col-md-12 px-md-0 pt-md-0">
+                            <div id="new_user" class="container tab-pane col-md-12 px-md-0 pt-md-0 fade">
                                 <div class="container col-md-12 px-md-4 py-md-2 border">
                                     <h5>Add new user</h5>
                                 </div>
@@ -403,6 +403,22 @@
 </div>
 
 <script>
+    const navTabActive = "nav-link active";
+    const navTab = "nav-link";
+    const contentTabActive = "container tab-pane col-md-12 px-md-0 pt-md-0 fade active show";
+    const contentTab = "container tab-pane col-md-12 px-md-0 pt-md-0 fade";
+
+    function usersTableActivate() {
+
+        document.getElementById("navTabsNewUser").setAttribute("class", navTab);
+        document.getElementById("new_user").setAttribute("class", contentTab);
+
+        document.getElementById("navTabsUsersTable").setAttribute("class", navTabActive);
+        document.getElementById("users_table").setAttribute("class", contentTabActive);
+    }
+</script>
+
+<script>
 
     const editModalCloseButton = document.getElementById('editModalCloseButton');
     const editModalForm = document.getElementById("editModalForm");
@@ -476,6 +492,7 @@
             console.log(err.message);
         }
         addRow();
+        usersTableActivate();
     }
 
 
