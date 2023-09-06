@@ -22,8 +22,8 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane container fade active show" id="homeContent">HOME2</div>
-    <div class="tab-pane container fade" id="menu1Content">MENU1</div>
-    <div class="tab-pane container fade" id="menu2Content">MENU2</div>
+    <div class="tab-pane container fade" id="menu1Content">Only user</div>
+    <div class="tab-pane container fade" id="menu2Content">User and admin</div>
 </div>
 <div id="authorizedUserInfo">
 
@@ -42,15 +42,28 @@
 
 
     async function downloadAuthUserInfo(){
-        const
+        var trigger;
+
         fetch('http://localhost:8080/users/authUser')
             .then(res => {
                 return res.json();
             }).then(data => {
-            data.roles.forEach(role => {
-                console.log(`${role.name} + ${role.id}`)
-            })
-
+            // data.roles.forEach(role => {
+            //     console.log(`${role.name} + ${role.id}`)
+            //     if (role.name === 'ADMIN') {
+            //         secondTabButtonActivate();
+            //     }
+            //
+            // })
+            //console.log(`roles count + ${data.roles.count()}`); "roles":[{"id":1
+            //console.log(`data stringify ${JSON.stringify(data.roles)}`);
+            //console.log(`roles contain true,false = ${JSON.stringify(data.roles).includes('"id":1')}`);
+            if (JSON.stringify(data.roles).includes('"id":2')) {
+                secondTabButtonActivate();
+            }
+            if (JSON.stringify(data.roles).includes('"id":1') && JSON.stringify(data.roles).includes('"id":2')) {
+                thirdTabActivate();
+            }
 
         }).catch(error => console.log(error));
     }
@@ -89,6 +102,14 @@
     function thirdTabFormActivate(event) {
         event.preventDefault();
 
+        document.getElementById("menu1Tab").setAttribute("class", navTab);
+        document.getElementById("homeTab").setAttribute("class", navTab);
+        document.getElementById("menu2Tab").setAttribute("class", navTabActive);
+        document.getElementById("menu1Content").setAttribute("class", contentTab);
+        document.getElementById("homeContent").setAttribute("class", contentTab);
+        document.getElementById("menu2Content").setAttribute("class", contentTabActive);
+    }
+    function thirdTabActivate() {
         document.getElementById("menu1Tab").setAttribute("class", navTab);
         document.getElementById("homeTab").setAttribute("class", navTab);
         document.getElementById("menu2Tab").setAttribute("class", navTabActive);

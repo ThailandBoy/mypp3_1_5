@@ -34,7 +34,7 @@
     <link href="/headers.css" rel="stylesheet">
     <title>Admin panel</title>
 </head>
-<body onload="addRow()">
+<body onload="functionsOnLoad()">
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
 
@@ -63,10 +63,10 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column nav-pills">
                     <li sec:authorize="hasRole('ADMIN')" class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href="#admin_page">Admin</a>
+                        <a class="nav-link" id="adminPageNavLink" data-toggle="pill" href="#admin_page">Admin</a>
                     </li>
                     <li sec:authorize="hasAnyRole('ADMIN', 'USER')" class="nav-item">
-                        <a class="nav-link"  data-toggle="pill" href="#user_page">User</a>
+                        <a class="nav-link active" id="userPageNavLink" data-toggle="pill" href="#user_page">User</a>
                     </li>
                 </ul>
             </div>
@@ -74,7 +74,7 @@
         <main class="col-md-10 m-md-0 p-md-0 bg-light">
             <div class="container col-md-12 px-md-0">
                 <div class="tab-content">
-                    <div sec:authorize="hasRole('ADMIN')" class="tab-pane container active col-md-12 p-md-4" id="admin_page">
+                    <div sec:authorize="hasRole('ADMIN')" class="tab-pane container col-md-12 p-md-4 fade " id="admin_page">
                         <h2>Admin panel</h2>
                         <!-- Nav pills -->
                         <ul class="nav nav-tabs" role="tablist">
@@ -172,7 +172,7 @@
                             </div>
                         </div>
                     </div>
-                    <div sec:authorize="hasAnyRole('ADMIN', 'USER')" class="tab-pane container fade col-md-12 p-md-4" id="user_page">
+                    <div sec:authorize="hasAnyRole('ADMIN', 'USER')" class="tab-pane container col-md-12 p-md-4 fade active show" id="user_page">
                         <h2>User information-page</h2>
                         <div class="container tab-pane active col-md-12 px-md-0 pt-md-0">
                             <div class="container col-md-12 px-md-4 py-md-2 border">
@@ -403,6 +403,38 @@
 </div>
 
 <script>
+    function functionsOnLoad() {
+        addRow();
+        setDefaultNavLinkByRole();
+    }
+</script>
+
+<script>
+    const navLinkActiveSideBar = "nav-link active";
+    const navLinkSideBar = "nav-link";
+    const contentTabActiveGeneral = "tab-pane container col-md-12 p-md-4 fade active show";
+    const contentTabGeneral = "tab-pane container col-md-12 p-md-4 fade";
+
+    async function setDefaultNavLinkByRole(){
+        fetch('http://localhost:8080/userRest/authUser')
+            .then(res => {
+                return res.json();
+            }).then(data => {
+                console.log(`setDefaultNavLinkByRole data  + ${data}`);
+            if (JSON.stringify(data.roles).includes('"id":1') && JSON.stringify(data.roles).includes('"id":2')) {
+                adminRoleNavLinkActivate();
+            }
+        }).catch(error => console.log(error));
+    }
+    function adminRoleNavLinkActivate() {
+        document.getElementById("userPageNavLink").setAttribute("class", navLinkSideBar);
+        document.getElementById("adminPageNavLink").setAttribute("class", navLinkActiveSideBar);
+        document.getElementById("user_page").setAttribute("class", contentTabGeneral);
+        document.getElementById("admin_page").setAttribute("class", contentTabActiveGeneral);
+    }
+</script>
+
+<script>
     const navTabActive = "nav-link active";
     const navTab = "nav-link";
     const contentTabActive = "container tab-pane col-md-12 px-md-0 pt-md-0 fade active show";
@@ -417,7 +449,6 @@
         document.getElementById("users_table").setAttribute("class", contentTabActive);
     }
 </script>
-
 <script>
 
     const editModalCloseButton = document.getElementById('editModalCloseButton');
