@@ -10,7 +10,7 @@ import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.services.UserServiceIntr;
 
 @RestController
-@RequestMapping("/userRest/")
+@RequestMapping("/user")
 public class UserRestController {
     @Autowired
     private UserServiceIntr userService;

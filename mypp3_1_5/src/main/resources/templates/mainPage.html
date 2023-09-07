@@ -40,10 +40,7 @@
 
     <div class="navbar-brand col-md-10 col-lg-2 me-0 px-3" href="#">
         <table>
-            <tr>
-                <td><strong><p th:text="${user.getEmail()}"></p></strong></td>
-                <td><p>&nbsp;with role&nbsp;</p></td>
-                <td th:each="role:${user.getRolesList()}"><p th:text="${role.getName()+'&nbsp;'}"></p></td>
+            <tr id="headerNavBarAuthorizedUser">
             </tr>
         </table>
     </div>
@@ -116,7 +113,7 @@
                                 <div class="container-fluid bg-white p-0 m-0">
                                     <div class="container-fluid col-md-12 p-0 py-md-2 text-center">
                                         <!-- Form -->
-                                        <form class="form-example" id="newUserForm" action="#" th:action="@{./saveWrapper}" method="post" th:object="${userRoleWrap}">
+                                        <form class="form-example" id="newUserForm" action="#" method="post">
                                             <div class="mx-auto col-5 col-md-4 col-lg-3">
                                                 <!-- Input fields -->
                                                 <div class="form-group" >
@@ -127,7 +124,7 @@
                                                             id="new_username"
                                                             placeholder="Username"
                                                             name="username"
-                                                            th:field="*{user.username}"
+
                                                     />
                                                 </div>
                                                 <div class="form-group">
@@ -138,7 +135,7 @@
                                                             id="new_password"
                                                             placeholder="Password"
                                                             name="password"
-                                                            th:field="*{user.password}"
+
                                                     />
                                                 </div>
                                                 <div class="form-group">
@@ -149,15 +146,15 @@
                                                             id="new_email"
                                                             placeholder="Email"
                                                             name="email"
-                                                            th:field="*{user.email}"
+
                                                     />
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sel2"><strong>Role</strong></label>
-                                                    <select multiple class="form-control selectpicker" id="sel2" th:field="*{roleList2}">
-                                                        <option th:each="role : *{roleList}"
-                                                                th:value="${role.getId()}"
-                                                                th:text="${role.getName()}">role
+                                                    <select multiple class="form-control selectpicker" id="sel2" >
+                                                        <option >
+
+
                                                         </option>
                                                     </select>
                                                 </div>
@@ -190,14 +187,14 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td th:text="${user.id}"></td>
-                                        <td th:text="${user.username}"></td>
+                                        <td ></td>
+                                        <td ></td>
                                         <td>
-                                            <div th:each="role:${user.getRolesList()}">
-                                                <p th:text="${role.getName()}"></p>
+                                            <div >
+                                                <p ></p>
                                             </div>
                                         </td>
-                                        <td th:text="${user.email}"></td>
+                                        <td ></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -223,7 +220,7 @@
                 <div class="container-fluid p-0">
                     <div class="container-fluid col-md-12 p-0 py-md-2 text-center">
                         <!-- Form -->
-                        <form id="editModalForm" class="form-example" action="#" th:action="@{./saveWrapper}" method="post" th:object="${userRoleWrap}">
+                        <form id="editModalForm" class="form-example" action="#"  method="post" >
                             <!-- Input fields -->
                             <div class="mx-auto col-8 col-md-8 col-lg-6">
                                 <div class="form-group">
@@ -233,7 +230,7 @@
                                             id="editModalUserId"
                                             placeholder="ID"
                                             name="id"
-                                            th:field="*{user.id}"
+
 
                                     />
                                     <label for="editModalUserId"><strong>ID</strong></label>
@@ -256,7 +253,7 @@
                                             id="editModalUsername"
                                             placeholder="Username"
                                             name="username"
-                                            th:field="*{user.username}"
+
 
                                     />
                                 </div>
@@ -268,7 +265,7 @@
                                             id="editModalPassword"
                                             placeholder="Password"
                                             name="password"
-                                            th:field="*{user.password}"
+
 
                                     />
                                 </div>
@@ -280,13 +277,13 @@
                                             id="editModalEmail"
                                             placeholder="Email"
                                             name="email"
-                                            th:field="*{user.email}"
+
 
                                     />
                                 </div>
                                 <div class="form-group">
                                     <label for="editModalRoles"><strong>Role</strong></label>
-                                    <select multiple class="form-control selectpicker" id="editModalRoles" th:field="*{roleList2}">
+                                    <select multiple class="form-control selectpicker" id="editModalRoles">
 
                                     </select>
                                 </div>
@@ -319,7 +316,7 @@
                 <div class="container-fluid p-0">
                     <div class="container-fluid col-md-12 p-0 py-md-2 text-center">
                         <!-- Form -->
-                        <form id="deleteModalForm" class="form-example" action="#" th:action="@{./deleteUser}" method="post" th:object="${userRoleWrap}">
+                        <form id="deleteModalForm" class="form-example" action="#"  method="post" >
                             <!-- Input fields -->
                             <div class="mx-auto col-8 col-md-8 col-lg-6">
 
@@ -330,7 +327,7 @@
                                             id="deleteModalUserId"
                                             placeholder="ID"
                                             name="id"
-                                            th:field="*{user.id}"
+
 
                                     />
                                     <label for="deleteModalUserId"><strong>ID</strong></label>
@@ -353,7 +350,7 @@
                                             placeholder="Username"
                                             name="username"
                                             disabled
-                                            th:field="*{user.username}"
+
                                     />
                                 </div>
                                 <div class="form-group">
@@ -365,7 +362,7 @@
                                             placeholder="Password"
                                             name="password"
                                             disabled
-                                            th:field="*{user.password}"
+
                                     />
                                 </div>
                                 <div class="form-group">
@@ -377,13 +374,13 @@
                                             placeholder="Email"
                                             name="email"
                                             disabled
-                                            th:field="*{user.email}"
+
                                     />
                                 </div>
                                 <div class="form-group">
                                     <label for="deleteModalRoles"><strong>Role</strong></label>
                                     <select multiple class="form-control selectpicker" id="deleteModalRoles"
-                                            th:field="*{roleList2}" disabled>
+                                            disabled>
 
                                     </select>
                                 </div>
@@ -404,8 +401,9 @@
 
 <script>
     function functionsOnLoad() {
-        addRow();
         setDefaultNavLinkByRole();
+        setHeaderUserWithRole();
+        addRow();
     }
 </script>
 
@@ -416,7 +414,7 @@
     const contentTabGeneral = "tab-pane container col-md-12 p-md-4 fade";
 
     async function setDefaultNavLinkByRole(){
-        fetch('http://localhost:8080/userRest/authUser')
+        fetch('http://localhost:8080/user/authUser')
             .then(res => {
                 return res.json();
             }).then(data => {
@@ -431,6 +429,30 @@
         document.getElementById("adminPageNavLink").setAttribute("class", navLinkActiveSideBar);
         document.getElementById("user_page").setAttribute("class", contentTabGeneral);
         document.getElementById("admin_page").setAttribute("class", contentTabActiveGeneral);
+    }
+</script>
+<script>
+    function setHeaderUserWithRole() {
+        fetch('http://localhost:8080/user/authUser')
+            .then(res => {
+                return res.json();
+            }).then(data => {
+            console.log(`setHeaderUserWithRole data  + ${data}`);
+            console.log(`setHeaderUserWithRole data.username  + ${data.username}`);
+            console.log(`setHeaderUserWithRole data.email  + ${data.email}`);
+            console.log(`setHeaderUserWithRole data.roles  + ${data.roles}`);
+
+            var userRoles = ` with roles `;
+            data.roles.forEach(role => {
+                userRoles += `${role.name} `;
+            })
+
+            document.getElementById("headerNavBarAuthorizedUser")
+                .insertAdjacentHTML("beforeend",`<td><strong><p>${data.email}&nbsp;</p></strong></td>`);
+            document.getElementById("headerNavBarAuthorizedUser")
+                .insertAdjacentHTML("beforeend",`<td><strong><p>${userRoles}</p></strong></td>`);
+
+        }).catch(error => console.log(error));
     }
 </script>
 
@@ -526,7 +548,6 @@
         usersTableActivate();
     }
 
-
     function removeAndCreateTbody() {
         let tBody = document.getElementById("allUsersTableBody");
         tBody.remove();
@@ -541,7 +562,7 @@
         var roles;
         var tableRow;
 
-        fetch('http://localhost:8080/users/allUsers')
+        fetch('http://localhost:8080/admin/allUsers')
             .then(res => {
                 return res.json();
             }).then(data => {
@@ -647,7 +668,7 @@
         var roles;
 
         console.log(`userId + ${userId}`)
-        fetch('http://localhost:8080/users/allUsers')
+        fetch('http://localhost:8080/admin/allUsers')
             .then(res => {
                 return res.json();
             }).then(data => {
