@@ -152,10 +152,7 @@
                                                 <div class="form-group">
                                                     <label for="sel2"><strong>Role</strong></label>
                                                     <select multiple class="form-control selectpicker" id="sel2" >
-                                                        <option >
 
-
-                                                        </option>
                                                     </select>
                                                 </div>
                                                 <button type="submit" class="btn btn-success btn-customized mt-4">
@@ -400,9 +397,17 @@
 </div>
 
 <script>
+    // Порядок выполнения скриптов. текущий вариант стабилен
     function functionsOnLoad() {
+        // Автоматизация выбора вкладки зависимо от роли
         setDefaultNavLinkByRole();
+        // Отображение email и роли для текущего авторизованного пользователя
         setHeaderUserWithRole();
+
+        // Функция получения всех ролей для "Окна новый юзеров"
+        getAllRolesToNewUser()
+
+        // отрисовка таблица всех пользователей
         addRow();
     }
 </script>
@@ -413,6 +418,7 @@
     const contentTabActiveGeneral = "tab-pane container col-md-12 p-md-4 fade active show";
     const contentTabGeneral = "tab-pane container col-md-12 p-md-4 fade";
 
+    // Автоматизация выбора вкладки в зависимости от роли
     async function setDefaultNavLinkByRole(){
         fetch('http://localhost:8080/user/authUser')
             .then(res => {
@@ -432,6 +438,8 @@
     }
 </script>
 <script>
+
+    // Отображение email и роли для текущего авторизованного пользователя
     function setHeaderUserWithRole() {
         fetch('http://localhost:8080/user/authUser')
             .then(res => {
@@ -462,6 +470,7 @@
     const contentTabActive = "container tab-pane col-md-12 px-md-0 pt-md-0 fade active show";
     const contentTab = "container tab-pane col-md-12 px-md-0 pt-md-0 fade";
 
+    // Для активации вкладки с таблицей юзеров после editModalFormSubmit()
     function usersTableActivate() {
 
         document.getElementById("navTabsNewUser").setAttribute("class", navTab);
@@ -473,17 +482,21 @@
 </script>
 <script>
 
+    // Данные для "Модального окна редактирования"
     const editModalCloseButton = document.getElementById('editModalCloseButton');
     const editModalForm = document.getElementById("editModalForm");
     editModalForm.addEventListener('submit', editModalFormSubmit, false);
 
+    // Данные для "Модального окна удаления"
     const deleteModalCloseButton = document.getElementById('deleteModalCloseButton');
     const deleteModalForm = document.getElementById("deleteModalForm");
     deleteModalForm.addEventListener('submit', deleteModalFormSubmit, false);
 
+    // Данные для "Формы добавления новых юзеров"
     const newUserForm = document.getElementById('newUserForm');
     newUserForm.addEventListener('submit', newUserFormSubmit, false)
 
+    // Функция перехвата сабмита "Модального окна редактирования"
     async function editModalFormSubmit(event) {
         event.preventDefault();
         const data = new FormData(editModalForm);
@@ -506,6 +519,7 @@
         addRow();
     }
 
+    // Функция перехвата сабмита "Модального окна удаления"
     async function deleteModalFormSubmit(event) {
         event.preventDefault();
         const data = new FormData(deleteModalForm);
@@ -527,6 +541,7 @@
         addRow();
     }
 
+    // Функция перехвата сабмита "Формы добавления новых юзеров"
     async function newUserFormSubmit(event) {
         event.preventDefault();
         const data = new FormData(newUserForm);
@@ -548,6 +563,7 @@
         usersTableActivate();
     }
 
+    // Функция для обновления "тела" таблицы юзеров
     function removeAndCreateTbody() {
         let tBody = document.getElementById("allUsersTableBody");
         tBody.remove();
@@ -555,6 +571,8 @@
         tBodyNew.setAttribute('id','allUsersTableBody');
         document.getElementById("allUsersTable").append(tBodyNew);
     }
+
+    // отрисовка таблицы всех юзеров
     function addRow() {
         removeAndCreateTbody();
         var tBody = document.getElementById("allUsersTableBody");
@@ -605,9 +623,28 @@
             })
         }).catch(error => console.log(error));
     }
+
+    // Функция получения всех ролей для "Окна новый юзеров"
+    async function getAllRolesToNewUser() {
+        var roleData;
+        fetch('http://localhost:8080/admin/allRoles')
+            .then(res => {
+                return res.json();
+            }).then(data => {
+            data.forEach(role => {
+                console.log(role);
+                roleData = `<option selected value="${role.id}">${role.name}</option>`;
+                console.log(` getAllRoles() roleData ${roleData}`);
+                document.getElementById("sel2").insertAdjacentHTML('beforeend', roleData);
+            })
+        }).catch(error => console.log(error));
+    }
+
+
+    // Функция получения всех ролей для "Модального окна редактирования"
     async function getAllRoles() {
         var roleData;
-        fetch('http://localhost:8080/users/allRoles')
+        fetch('http://localhost:8080/admin/allRoles')
             .then(res => {
                 return res.json();
             }).then(data => {
@@ -620,16 +657,19 @@
             }).catch(error => console.log(error));
     }
 
+    // Функция для обновления селектов "Модального окна редактирования"
     function removeAndCreateModalEditRolesSelect() {
         var selectRoles = document.getElementById("editModalRoles");
         while (selectRoles.options.length > 0) {
             selectRoles.remove(0);
         }
     }
+
+    // Функция для заполнения полей "Модального окна редактирования"
     function editUser(user) {
         var userId = Number(user);
 
-        fetch('http://localhost:8080/users/allUsers')
+        fetch('http://localhost:8080/admin/allUsers')
             .then(res => {
                 return res.json();
             }).then(data => {
@@ -656,12 +696,16 @@
         }).catch(error => console.log(error));
         removeAndCreateModalEditRolesSelect();
     }
+
+    // Функция для обновления селектов "Модального окна удаления"
     function removeAndCreateModalDeleteRolesSelect() {
         var selectRoles = document.getElementById("deleteModalRoles");
         while (selectRoles.options.length > 0) {
             selectRoles.remove(0);
         }
     }
+
+    // Функция для заполнения полей "Модального окна удаления"
     function deleteUser(user) {
         var userId = Number(user);
         var userRole = "";
