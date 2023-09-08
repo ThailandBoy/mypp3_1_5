@@ -23,7 +23,7 @@ public class AdminRestController {
     @Autowired
     private RoleServiceIntr roleService;
 
-    @PostMapping("/saveWrapper")
+    @PutMapping("/saveWrapper")
     public ResponseEntity<String> saveWrapper(@RequestBody UserDTO userDTO) {
         try {
             userService.saveWrapper(userDTO);
