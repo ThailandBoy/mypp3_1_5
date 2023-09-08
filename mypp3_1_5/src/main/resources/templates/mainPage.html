@@ -527,7 +527,7 @@
 
         try {
             const res = await fetch(
-                'http://localhost:8080/admin/saveWrapper',
+                'http://localhost:8080/admin/updateWrapper',
                 {
                     headers: {
                         "Content-Type": "application/json"
@@ -619,7 +619,7 @@
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    method: 'PUT',
+                    method: 'POST',
                     body: json
                 },
             );

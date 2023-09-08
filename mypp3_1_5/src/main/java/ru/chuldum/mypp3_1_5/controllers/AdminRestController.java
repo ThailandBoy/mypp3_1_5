@@ -23,12 +23,21 @@ public class AdminRestController {
     @Autowired
     private RoleServiceIntr roleService;
 
-    @PutMapping("/saveWrapper")
+    @PostMapping("/saveWrapper")
     public ResponseEntity<String> saveWrapper(@RequestBody UserDTO userDTO) {
         try {
             userService.saveWrapper(userDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка при сохранении пользователя!");
+        }
+        return ResponseEntity.ok().body(HttpStatus.OK.toString());
+    }
+    @PutMapping("/updateWrapper")
+    public ResponseEntity<String> updateWrapper(@RequestBody UserDTO userDTO) {
+        try {
+            userService.saveWrapper(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Ошибка при изменении пользователя!");
         }
         return ResponseEntity.ok().body(HttpStatus.OK.toString());
     }
