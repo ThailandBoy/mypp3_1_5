@@ -199,7 +199,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Edit user</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" id="closeEditModalHeaderButton">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body p-0">
@@ -276,7 +276,7 @@
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer text-right">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editModalCloseButton">Close</button>
+                                <input type="reset" class="btn btn-secondary" id="editModalCloseButton" value="Close"/>
                                 <button type="submit" class="btn btn-primary" id="editModalButton" >Edit</button>
                             </div>
                         </form>
@@ -489,9 +489,12 @@
 <script>
 
     // Данные для "Модального окна редактирования"
+    const closeEditModalHeaderButton = document.getElementById('closeEditModalHeaderButton');
     const editModalCloseButton = document.getElementById('editModalCloseButton');
     const editModalForm = document.getElementById("editModalForm");
+    closeEditModalHeaderButton.addEventListener('click', closeEditModalHeaderButtonFunction)
     editModalForm.addEventListener('submit', editModalFormSubmit, false);
+    editModalForm.addEventListener('reset', editModalCloseButtonFunction, false);
 
     // Данные для "Модального окна удаления"
     const deleteModalCloseButton = document.getElementById('deleteModalCloseButton');
@@ -541,7 +544,12 @@
         addRow();
     }
 
-
+    function closeEditModalHeaderButtonFunction() {
+        editModalCloseButton.click();
+    }
+    function editModalCloseButtonFunction() {
+        closeEditModalHeaderButton.click();
+    }
 
     // Функция перехвата сабмита "Модального окна удаления"
     async function deleteModalFormSubmit(event) {
