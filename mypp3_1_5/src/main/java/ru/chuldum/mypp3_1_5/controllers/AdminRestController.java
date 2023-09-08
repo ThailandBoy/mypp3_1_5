@@ -3,11 +3,7 @@ package ru.chuldum.mypp3_1_5.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import ru.chuldum.mypp3_1_5.entities.Role;
 import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.entities.UserDTO;
@@ -37,7 +33,7 @@ public class AdminRestController {
         return ResponseEntity.ok().body(HttpStatus.OK.toString());
     }
 
-    @PostMapping("/deleteThroughId")
+    @DeleteMapping("/deleteThroughId")
     public ResponseEntity<String> deleteThroughId(@RequestBody UserDTO userDTO) {
         try {
             userService.deleteViaId(userDTO.getId());
