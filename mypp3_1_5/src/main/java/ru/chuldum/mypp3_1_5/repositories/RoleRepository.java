@@ -9,4 +9,6 @@ import ru.chuldum.mypp3_1_5.entities.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
+    Role findRoleByName(String name);
+
 }

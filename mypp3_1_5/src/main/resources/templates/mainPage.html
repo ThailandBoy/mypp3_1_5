@@ -151,7 +151,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sel2"><strong>Role</strong></label>
-                                                    <select multiple class="form-control selectpicker" id="sel2" >
+                                                    <select multiple class="form-control" id="sel2" name="roles">
 
                                                     </select>
                                                 </div>
@@ -173,7 +173,7 @@
                                 <h5>About user</h5>
                             </div>
                             <div class="table-responsive container col-md-12 px-md-4 py-md-3 bg-white border">
-                                <table class="table table-striped table-sm">
+                                <table class="table table-striped table-sm" id="aboutUserTableId">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -182,18 +182,7 @@
                                         <th>Email</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td ></td>
-                                        <td ></td>
-                                        <td>
-                                            <div >
-                                                <p ></p>
-                                            </div>
-                                        </td>
-                                        <td ></td>
-                                    </tr>
-                                    </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -280,7 +269,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editModalRoles"><strong>Role</strong></label>
-                                    <select multiple class="form-control selectpicker" id="editModalRoles">
+                                    <select multiple class="form-control selectpicker" id="editModalRoles" name="roles">
 
                                     </select>
                                 </div>
@@ -333,7 +322,6 @@
                                             class="form-control ID"
                                             id="deleteModalUserIdDisabled"
                                             placeholder="ID"
-                                            name="idDisabled"
                                             disabled
 
                                     />
@@ -377,7 +365,7 @@
                                 <div class="form-group">
                                     <label for="deleteModalRoles"><strong>Role</strong></label>
                                     <select multiple class="form-control selectpicker" id="deleteModalRoles"
-                                            disabled>
+                                            disabled name="roles">
 
                                     </select>
                                 </div>
@@ -441,6 +429,11 @@
 
     // Отображение email и роли для текущего авторизованного пользователя
     function setHeaderUserWithRole() {
+        var tBody = document.getElementById("aboutUserTableId");
+        var tableRow;
+        var roles;
+        var userRole = "";
+
         fetch('http://localhost:8080/user/authUser')
             .then(res => {
                 return res.json();
@@ -459,6 +452,25 @@
                 .insertAdjacentHTML("beforeend",`<td><strong><p>${data.email}&nbsp;</p></strong></td>`);
             document.getElementById("headerNavBarAuthorizedUser")
                 .insertAdjacentHTML("beforeend",`<td><strong><p>${userRoles}</p></strong></td>`);
+
+            tableRow = `<tr>`;
+            //var tableRowClose = `</tr>`;
+
+            tableRow += `<td>${data.id}</td>`;
+            tableRow += `<td>${data.username}</td>`;
+
+            roles = data.roles;
+            roles.forEach(function(role) { userRole += `${role.name} `});
+
+            tableRow += `<td>${userRole}</td>`
+
+            tableRow += `<td>${data.email}</td>`;
+
+            tableRow += `</tr>`
+
+            tBody.insertAdjacentHTML('beforeend', tableRow);
+            tableRow = '';
+            userRole = '';
 
         }).catch(error => console.log(error));
     }
@@ -499,17 +511,33 @@
     // Функция перехвата сабмита "Модального окна редактирования"
     async function editModalFormSubmit(event) {
         event.preventDefault();
-        const data = new FormData(editModalForm);
-        console.log(data);
+        const formData = new FormData(editModalForm);
+        var object = {};
+        formData.forEach((value, key) => {
+            // Reflect.has in favor of: object.hasOwnProperty(key)
+            if(!Reflect.has(object, key)){
+                object[key] = value;
+                return;
+            }
+            if(!Array.isArray(object[key])){
+                object[key] = [object[key]];
+            }
+            object[key].push(value);
+        });
+        var json = JSON.stringify(object);
+        console.log(`editModalFormSubmit + ${json}`)
+
         try {
             const res = await fetch(
                 'http://localhost:8080/admin/saveWrapper',
                 {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     method: 'POST',
-                    body: data,
+                    body: json,
                 },
             );
-
             const resData = await res.json();
             console.log(resData);
         } catch (err) {
@@ -522,14 +550,31 @@
     // Функция перехвата сабмита "Модального окна удаления"
     async function deleteModalFormSubmit(event) {
         event.preventDefault();
-        const data = new FormData(deleteModalForm);
-        console.log(data);
+        const formData = new FormData(deleteModalForm);
+        var object = {};
+        formData.forEach((value, key) => {
+            // Reflect.has in favor of: object.hasOwnProperty(key)
+            if(!Reflect.has(object, key)){
+                object[key] = value;
+                return;
+            }
+            if(!Array.isArray(object[key])){
+                object[key] = [object[key]];
+            }
+            object[key].push(value);
+        });
+        var json = JSON.stringify(object);
+        console.log(`editModalFormSubmit + ${json}`)
+
         try {
             const res = await fetch(
-                'http://localhost:8080/admin/deleteUser',
+                'http://localhost:8080/admin/deleteThroughId',
                 {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     method: 'POST',
-                    body: data,
+                    body: json,
                 },
             );
             const resData = await res.json();
@@ -544,14 +589,33 @@
     // Функция перехвата сабмита "Формы добавления новых юзеров"
     async function newUserFormSubmit(event) {
         event.preventDefault();
-        const data = new FormData(newUserForm);
-        console.log(data);
+        const formData = new FormData(newUserForm);
+        var object = {};
+        formData.forEach((value, key) => {
+            // Reflect.has in favor of: object.hasOwnProperty(key)
+            if(!Reflect.has(object, key)){
+                object[key] = value;
+                return;
+            }
+            if(!Array.isArray(object[key])){
+                object[key] = [object[key]];
+            }
+            object[key].push(value);
+        });
+        var json = JSON.stringify(object);
+
+        console.log(`json varible after loop = ${json}`);
+
+
         try {
             const res = await fetch(
                 'http://localhost:8080/admin/saveWrapper',
                 {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     method: 'POST',
-                    body: data,
+                    body: json
                 },
             );
             const resData = await res.json();
@@ -586,8 +650,6 @@
             }).then(data => {
             data.forEach(user => {
                 console.log(user);
-
-                var userPass = user;
 
                 tableRow = `<tr>`;
                 //var tableRowClose = `</tr>`;
@@ -634,7 +696,6 @@
             data.forEach(role => {
                 console.log(role);
                 roleData = `<option selected value="${role.id}">${role.name}</option>`;
-                console.log(` getAllRoles() roleData ${roleData}`);
                 document.getElementById("sel2").insertAdjacentHTML('beforeend', roleData);
             })
         }).catch(error => console.log(error));

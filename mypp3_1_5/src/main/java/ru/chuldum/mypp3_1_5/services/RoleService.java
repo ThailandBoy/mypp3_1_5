@@ -23,4 +23,9 @@ public class RoleService implements RoleServiceIntr {
         return roleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Role with id=" + id + " not found."));
     }
+
+    @Override
+    public Role getByName(String role) {
+        return roleRepository.findRoleByName(role);
+    }
 }

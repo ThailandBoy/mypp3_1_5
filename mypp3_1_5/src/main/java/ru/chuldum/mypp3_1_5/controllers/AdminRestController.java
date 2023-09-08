@@ -3,15 +3,15 @@ package ru.chuldum.mypp3_1_5.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.chuldum.mypp3_1_5.entities.Role;
 import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
+import ru.chuldum.mypp3_1_5.entities.UserDTO;
 import ru.chuldum.mypp3_1_5.services.RoleServiceIntr;
 import ru.chuldum.mypp3_1_5.services.UserServiceIntr;
 
@@ -29,9 +29,9 @@ public class AdminRestController {
     private RoleServiceIntr roleService;
 
     @PostMapping("/saveWrapper")
-    public ResponseEntity<String> saveWrapper(UserRoleWrap userRoleWrap) {
+    public ResponseEntity<String> saveWrapper(@RequestBody UserDTO userDTO) {
         try {
-            userService.saveWrapper(userRoleWrap);
+            userService.saveWrapper(userDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка при сохранении пользователя!");
         }
@@ -39,9 +39,9 @@ public class AdminRestController {
     }
 
     @PostMapping("/deleteThroughId")
-    public ResponseEntity<String> deleteThroughId(UserRoleWrap userRoleWrap) {
+    public ResponseEntity<String> deleteThroughId(@RequestBody UserDTO userDTO) {
         try {
-            userService.deleteViaId(userRoleWrap.getUser().getId());
+            userService.deleteViaId(userDTO.getId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка при удалении пользователя!");
         }

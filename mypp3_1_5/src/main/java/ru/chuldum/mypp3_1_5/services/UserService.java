@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.chuldum.mypp3_1_5.entities.Role;
 import ru.chuldum.mypp3_1_5.entities.User;
+import ru.chuldum.mypp3_1_5.entities.UserDTO;
 import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
 import ru.chuldum.mypp3_1_5.repositories.UserRepository;
 
@@ -31,11 +32,14 @@ public class UserService implements UserDetailsService, UserServiceIntr {
 
 
     @Transactional
-    public void saveWrapper(UserRoleWrap userRoleWrap) {
-        User user = userRoleWrap.getUser();
-        user.setPassword(passwordEncoder.encode(userRoleWrap.getUser().getPassword()));
+    public void saveWrapper(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setEmail(userDTO.getEmail());
         List<Role> roleList = new ArrayList<>();
-        for (Long roleId : userRoleWrap.getRoleList2()) {
+        for (Long roleId : userDTO.getRoles()) {
             roleList.add(roleServiceIntr.getById(roleId));
         }
         user.setRoles(roleList);
