@@ -19,6 +19,7 @@ public class UserDTO {
         this.email = email;
         this.roles = roles;
     }
+
     public UserDTO(Long id, String username, String password, String email, Long[] roles) {
         this.id = id;
         this.username = username;
@@ -26,6 +27,7 @@ public class UserDTO {
         this.email = email;
         this.roles = roles;
     }
+
 
     public Long getId() {
         return id;
@@ -66,6 +68,8 @@ public class UserDTO {
     public void setRoles(Long[] roles) {
         this.roles = roles;
     }
+
+
 
     @Override
     public String toString() {

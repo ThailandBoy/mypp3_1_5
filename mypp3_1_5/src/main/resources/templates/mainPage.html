@@ -606,10 +606,10 @@
             }
             object[key].push(value);
         });
+        object.roles = formData.getAll("roles");
         var json = JSON.stringify(object);
 
         console.log(`json varible after loop = ${json}`);
-
 
         try {
             const res = await fetch(

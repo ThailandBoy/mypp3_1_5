@@ -37,10 +37,13 @@ public class UserService implements UserDetailsService, UserServiceIntr {
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
+
         List<Role> roleList = new ArrayList<>();
         for (Long roleId : userDTO.getRoles()) {
             roleList.add(roleServiceIntr.getById(roleId));
         }
+
+
         user.setRoles(roleList);
         save(user);
     }
