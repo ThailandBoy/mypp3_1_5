@@ -438,10 +438,10 @@
             .then(res => {
                 return res.json();
             }).then(data => {
-            console.log(`setHeaderUserWithRole data  + ${data}`);
-            console.log(`setHeaderUserWithRole data.username  + ${data.username}`);
-            console.log(`setHeaderUserWithRole data.email  + ${data.email}`);
-            console.log(`setHeaderUserWithRole data.roles  + ${data.roles}`);
+            // console.log(`setHeaderUserWithRole data  + ${data}`);
+            // console.log(`setHeaderUserWithRole data.username  + ${data.username}`);
+            // console.log(`setHeaderUserWithRole data.email  + ${data.email}`);
+            // console.log(`setHeaderUserWithRole data.roles  + ${data.roles}`);
 
             var userRoles = ` with roles `;
             data.roles.forEach(role => {
@@ -454,18 +454,12 @@
                 .insertAdjacentHTML("beforeend",`<td><strong><p>${userRoles}</p></strong></td>`);
 
             tableRow = `<tr>`;
-            //var tableRowClose = `</tr>`;
-
             tableRow += `<td>${data.id}</td>`;
             tableRow += `<td>${data.username}</td>`;
-
             roles = data.roles;
             roles.forEach(function(role) { userRole += `${role.name} `});
-
             tableRow += `<td>${userRole}</td>`
-
             tableRow += `<td>${data.email}</td>`;
-
             tableRow += `</tr>`
 
             tBody.insertAdjacentHTML('beforeend', tableRow);
@@ -546,6 +540,8 @@
         editModalCloseButton.click();
         addRow();
     }
+
+
 
     // Функция перехвата сабмита "Модального окна удаления"
     async function deleteModalFormSubmit(event) {

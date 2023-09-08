@@ -2,7 +2,13 @@ package ru.chuldum.mypp3_1_5.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+
 
 @Entity
 @Table(name = "roles")

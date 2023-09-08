@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.chuldum.mypp3_1_5.entities.Role;
 import ru.chuldum.mypp3_1_5.entities.User;
 import ru.chuldum.mypp3_1_5.entities.UserDTO;
-import ru.chuldum.mypp3_1_5.entities.UserRoleWrap;
 import ru.chuldum.mypp3_1_5.repositories.UserRepository;
 
 import java.util.ArrayList;
